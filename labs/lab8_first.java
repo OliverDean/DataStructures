@@ -1,3 +1,4 @@
+package labs;
 import CITS2200.Graph;
 import CITS2200.Path;
 

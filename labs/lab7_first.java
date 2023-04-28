@@ -1,3 +1,4 @@
+package labs;
 import CITS2200.IllegalValue;
 import CITS2200.Iterator;
 import CITS2200.OutOfBounds;

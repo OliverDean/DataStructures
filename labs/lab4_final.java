@@ -1,3 +1,4 @@
+package labs;
 import CITS2200.Link;
 import CITS2200.List;
 import CITS2200.OutOfBounds;
