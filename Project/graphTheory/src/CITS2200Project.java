@@ -1,4 +1,4 @@
-package project;
+
 
 public interface CITS2200Project {
 	/**

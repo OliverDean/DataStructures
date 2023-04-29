@@ -1,0 +1,12 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "CITS2200.jar",
+        "Project/graphTheory/lib/CITS2200.jar"
+    ],
+    "cSpell.words": [
+        "CITS"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.dependency.packagePresentation": "hierarchical"
+}
