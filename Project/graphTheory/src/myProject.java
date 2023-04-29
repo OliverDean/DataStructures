@@ -1,7 +1,9 @@
+package Project.graphTheory.src;
+
 import java.io.*;
 import java.util.*;
 
-import CITS2200;
+import CITS2200.*;
 
 
 public class myProject implements CITS2200Project {
@@ -9,15 +11,19 @@ public class myProject implements CITS2200Project {
         // Add your code here.
     }
     public int getShortestPath(String urlFrom, String urlTo) {
+        return 0;
         // Add your code here.
     }
-    public string[] getCenters() {
+    public String[] getCenters() {
         // Add your code here.
+        return null;
     }
-    public string[][] getStronglyConnectedComponents() {
+    public String[][] getStronglyConnectedComponents() {
         // Add your code here.
+        return null;
     }
     public String[] getHamiltonianPath(){
         // Add your code here.
+        return null;
     }
 }
