@@ -9,12 +9,13 @@ public class CITS2200ProjectTester {
 		// Every pair of consecutive lines represent a directed edge.
 		// The edge goes from the URL in the first line to the URL in the second line.
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(path));
-			while (reader.ready()) {
-				String from = reader.readLine();
-				String to = reader.readLine();
-				System.out.println("Adding edge from " + from + " to " + to);
-				project.addEdge(from, to);
+			try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+				while (reader.ready()) {
+					String from = reader.readLine();
+					String to = reader.readLine();
+					System.out.println("Adding edge from " + from + " to " + to);
+					project.addEdge(from, to);
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("There was a problem:");
@@ -24,12 +25,38 @@ public class CITS2200ProjectTester {
 
 	public static void main(String[] args) {
 		// Change this to be the path to the graph file.
-		String pathToGraphFile = "\Users\olive\OneDrive\Desktop\CompSci\2023 semester 1\cits2200 algorithms\project\DataStructures\project\wikiTestData.txt";
+		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData.txt";
+		//pathToGraphFile = pathToGraphFile.repaceAll("\\\\", "//");
 		// Create an instance of your implementation.
-		CITS2200Project proj = new CITS2200Project();
+		CITS2200Project proj = new WikiPageGraph();
 		// Load the graph into the project.
 		loadGraph(proj, pathToGraphFile);
 
+		// This is just an example of how you might call getShortestPath.
+		
+		// Test cases
+        testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Flow_network", 0);
+        testGetShortestPath(proj, "/wiki/Non_existent_page", "/wiki/Flow_network", -1);
+        testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Non_existent_page", -1);
+        testGetShortestPath(proj, "/wiki/Dinic%27s_algorithm", "/wiki/Ford%E2%80%93Fulkerson_algorithm", 1);
+        testGetShortestPath(proj, "/wiki/Dinic%27s_algorithm", "/wiki/Approximate_max-flow_min-cut_theorem", 2);
+
+
+
 		// Write your own tests!
 	}
+
+	private static void testGetShortestPath(CITS2200Project proj, String urlFrom, String urlTo, int expected) {
+        long startTime = System.nanoTime();
+        int result = proj.getShortestPath(urlFrom, urlTo);
+        long elapsedTime = System.nanoTime() - startTime;
+
+        if (result == expected) {
+            System.out.println("Test passed: " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + elapsedTime + " ns");
+        } else {
+            System.out.println("Test failed: " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + elapsedTime + " ns");
+        }
+    }
+
+
 }
