@@ -241,6 +241,18 @@ public class WikiPageGraph implements CITS2200Project {
         }
     }
     
+    /**
+	 * Finds a Hamiltonian path in the page graph. There may be many
+	 * possible Hamiltonian paths. Any of these paths is a correct output.
+	 * This method should never be called on a graph with more than 20
+	 * vertices. If there is no Hamiltonian path, this method will
+	 * return an empty array. The output array should contain the URLs of pages
+	 * in a Hamiltonian path. The order matters, as the elements of the
+	 * array represent this path in sequence. So the element [0] is the start
+	 * of the path, and [1] is the next page, and so on.
+	 * 
+	 * @return a Hamiltonian path of the page graph.
+	 */
 
     @Override
     public String[] getHamiltonianPath() {

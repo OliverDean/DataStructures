@@ -25,7 +25,9 @@ public class CITS2200ProjectTester {
 
 	public static void main(String[] args) {
 
-		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData.txt";
+		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData2.txt";
+
+		int testDataFlag = 2;
 
 		// Create an instance of your implementation.
 		CITS2200Project proj = new WikiPageGraph();
@@ -35,74 +37,73 @@ public class CITS2200ProjectTester {
 		// Print graph centers
 		String[] centers = proj.getCenters();
 		System.out.println("Graph centers: " + Arrays.toString(centers));
-		// graph center is /wiki/Braess%27_paradox
 
-		testGetCenters(proj, new String[]{"/wiki/Braess%27_paradox"}); 
+		if (testDataFlag == 0){
+			testGetCenters(proj, new String[]{"/wiki/Braess%27_paradox"}); 
+			// Test cases for getShortestPath
+			testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Flow_network", 0);
+			testGetShortestPath(proj, "/wiki/Non_existent_page", "/wiki/Flow_network", -1);
+			testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Non_existent_page", -1);
+			testGetShortestPath(proj, "/wiki/Dinic%27s_algorithm", "/wiki/Ford%E2%80%93Fulkerson_algorithm", 1);
+			testGetShortestPath(proj, "/wiki/Dinic%27s_algorithm", "/wiki/Approximate_max-flow_min-cut_theorem", 2);
+			testGetShortestPath(proj, "/wiki/Edmonds%E2%80%93Karp_algorithm", "/wiki/Nowhere-zero_flow", -1);
+			testGetShortestPath(proj, "/wiki/Edmonds%E2%80%93Karp_algorithm", "/wiki/Minimum_cut", 3);
+			// Test cases for getStronglyConnectedComponents
+			testGetStronglyConnectedComponents(proj, new String[][]{{"/wiki/Approximate_max-flow_min-cut_theorem", "/wiki/Circulation_problem", "/wiki/Dinic%27s_algorithm", "/wiki/Edmonds%E2%80%93Karp_algorithm", "/wiki/Flow_network", "/wiki/Ford%E2%80%93Fulkerson_algorithm", "/wiki/Gomory%E2%80%93Hu_tree", "/wiki/Max-flow_min-cut_theorem", "/wiki/Maximum_flow_problem", "/wiki/Minimum-cost_flow_problem", "/wiki/Minimum_cut", "/wiki/Multi-commodity_flow_problem", "/wiki/Network_simplex_algorithm", "/wiki/Out-of-kilter_algorithm", "/wiki/Push%E2%80%93relabel_maximum_flow_algorithm"}, {"/wiki/Braess%27_paradox"}, {"/wiki/Nowhere-zero_flow"}});
+		}
+		if (testDataFlag == 2){
+			testGetCenters(proj, new String[]{"/wiki/Sociology_of_religion"});
+			// Test cases for getShortestPath
+			testGetShortestPath(proj, "/wiki/Sociology_of_religion", "/wiki/Sociology_of_religion", 0);
+			testGetShortestPath(proj, "/wiki/Non_existent_page", "/wiki/Sociology_of_religion", -1);
+			testGetShortestPath(proj, "/wiki/Sociology_of_religion", "/wiki/Non_existent_page", -1);
+			testGetShortestPath(proj, "/wiki/Game_theory", "/wiki/Topology", -1);
+			testGetShortestPath(proj, "/wiki/Pythagorean_theorem", "/wiki/Cosmology", 8);
 
+			//testGetStronglyConnectedComponents(proj, new String[][]{{"test"}});
+		}
+		if (testDataFlag == 1){
 
-		// Test cases for getShortestPath
-        testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Flow_network", 0);
-        testGetShortestPath(proj, "/wiki/Non_existent_page", "/wiki/Flow_network", -1);
-        testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Non_existent_page", -1);
-        testGetShortestPath(proj, "/wiki/Dinic%27s_algorithm", "/wiki/Ford%E2%80%93Fulkerson_algorithm", 1);
-        testGetShortestPath(proj, "/wiki/Dinic%27s_algorithm", "/wiki/Approximate_max-flow_min-cut_theorem", 2);
-
-		// Test case 1: Single SCC
-		CITS2200Project proj1 = new WikiPageGraph();
-		proj1.addEdge("/wiki/A", "/wiki/B");
-		proj1.addEdge("/wiki/B", "/wiki/C");
-		proj1.addEdge("/wiki/C", "/wiki/A");
-		testGetStronglyConnectedComponents(proj1, new String[][]{{"/wiki/A", "/wiki/B", "/wiki/C"}});
-	
-		// Test case 2: Two separate SCCs
-		CITS2200Project proj2 = new WikiPageGraph();
-		proj2.addEdge("/wiki/A", "/wiki/B");
-		proj2.addEdge("/wiki/B", "/wiki/C");
-		proj2.addEdge("/wiki/C", "/wiki/A");
-		proj2.addEdge("/wiki/D", "/wiki/E");
-		proj2.addEdge("/wiki/E", "/wiki/F");
-		proj2.addEdge("/wiki/F", "/wiki/D");
-		testGetStronglyConnectedComponents(proj2, new String[][]{{"/wiki/A", "/wiki/B", "/wiki/C"}, {"/wiki/D", "/wiki/E", "/wiki/F"}});
-	
-		// Test case 3: Two overlapping SCCs
-		CITS2200Project proj3 = new WikiPageGraph();
-		proj3.addEdge("/wiki/A", "/wiki/B");
-		proj3.addEdge("/wiki/B", "/wiki/C");
-		proj3.addEdge("/wiki/C", "/wiki/A");
-		proj3.addEdge("/wiki/C", "/wiki/D");
-		proj3.addEdge("/wiki/D", "/wiki/E");
-		proj3.addEdge("/wiki/E", "/wiki/F");
-		proj3.addEdge("/wiki/F", "/wiki/D");
-		testGetStronglyConnectedComponents(proj3, new String[][]{{"/wiki/A", "/wiki/B", "/wiki/C"}, {"/wiki/D", "/wiki/E", "/wiki/F"}});
-	
-		// Test case 4: Disconnected graph
-		CITS2200Project proj4 = new WikiPageGraph();
-		proj4.addEdge("/wiki/A", "/wiki/B");
-		proj4.addEdge("/wiki/C", "/wiki/D");
-		testGetStronglyConnectedComponents(proj4, new String[][]{{"/wiki/A"}, {"/wiki/B"}, {"/wiki/C"}, {"/wiki/D"}});
-	
-		// Test case 5: Empty graph
-		CITS2200Project proj5 = new WikiPageGraph();
-		testGetStronglyConnectedComponents(proj5, new String[][]{});
-	
-
-		// Modify the graph structure
-		modifyGraph(proj);
-
-		// Test cases for getCenters after modifying the graph
-		testGetCenters(proj, new String[]{"/wiki/Braess%27_paradox","/wiki/NodeE"});
-
+			// Test case 1: Single SCC
+			CITS2200Project proj1 = new WikiPageGraph();
+			testAddEdge(proj1,"/wiki/A", "/wiki/B");
+			proj1.addEdge("/wiki/B", "/wiki/C");
+			proj1.addEdge("/wiki/C", "/wiki/A");
+			testGetStronglyConnectedComponents(proj1, new String[][]{{"/wiki/A", "/wiki/B", "/wiki/C"}});
+		
+			// Test case 2: Two separate SCCs
+			CITS2200Project proj2 = new WikiPageGraph();
+			proj2.addEdge("/wiki/A", "/wiki/B");
+			proj2.addEdge("/wiki/B", "/wiki/C");
+			proj2.addEdge("/wiki/C", "/wiki/A");
+			proj2.addEdge("/wiki/D", "/wiki/E");
+			proj2.addEdge("/wiki/E", "/wiki/F");
+			proj2.addEdge("/wiki/F", "/wiki/D");
+			testGetStronglyConnectedComponents(proj2, new String[][]{{"/wiki/A", "/wiki/B", "/wiki/C"}, {"/wiki/D", "/wiki/E", "/wiki/F"}});
+		
+			// Test case 3: Two overlapping SCCs
+			CITS2200Project proj3 = new WikiPageGraph();
+			proj3.addEdge("/wiki/A", "/wiki/B");
+			proj3.addEdge("/wiki/B", "/wiki/C");
+			proj3.addEdge("/wiki/C", "/wiki/A");
+			proj3.addEdge("/wiki/C", "/wiki/D");
+			proj3.addEdge("/wiki/D", "/wiki/E");
+			proj3.addEdge("/wiki/E", "/wiki/F");
+			proj3.addEdge("/wiki/F", "/wiki/D");
+			testGetStronglyConnectedComponents(proj3, new String[][]{{"/wiki/A", "/wiki/B", "/wiki/C"}, {"/wiki/D", "/wiki/E", "/wiki/F"}});
+		
+			// Test case 4: Disconnected graph
+			CITS2200Project proj4 = new WikiPageGraph();
+			proj4.addEdge("/wiki/A", "/wiki/B");
+			proj4.addEdge("/wiki/C", "/wiki/D");
+			testGetStronglyConnectedComponents(proj4, new String[][]{{"/wiki/A"}, {"/wiki/B"}, {"/wiki/C"}, {"/wiki/D"}});
+		
+			// Test case 5: Empty graph
+			CITS2200Project proj5 = new WikiPageGraph();
+			testGetStronglyConnectedComponents(proj5, new String[][]{});
+		}
 	}
 
-
-
-	private static void modifyGraph(CITS2200Project proj) {
-        testAddEdge(proj, "/wiki/NodeA", "/wiki/NodeB");
-        testAddEdge(proj, "/wiki/NodeB", "/wiki/NodeC");
-        testAddEdge(proj, "/wiki/NodeC", "/wiki/NodeA");
-        testAddEdge(proj, "/wiki/NodeC", "/wiki/NodeD");
-        testAddEdge(proj, "/wiki/NodeD", "/wiki/NodeE");
-    }
 
 	private static void testAddEdge(CITS2200Project proj, String urlFrom, String urlTo) {
         proj.addEdge(urlFrom, urlTo);
