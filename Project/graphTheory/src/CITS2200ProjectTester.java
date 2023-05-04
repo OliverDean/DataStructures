@@ -33,7 +33,16 @@ public class CITS2200ProjectTester {
 		loadGraph(proj, pathToGraphFile);
 
 		// This is just an example of how you might call getShortestPath.
-		
+
+		// Print graph centers
+		String[] centers = proj.getCenters();
+		System.out.println("Graph centers: " + Arrays.toString(centers));
+		// graph center is /wiki/Braess%27_paradox
+
+		testGetCenters(proj, new String[]{"/wiki/Braess%27_paradox"}); 
+        testGetCenters(proj, new String[]{"/wiki/Center1", "/wiki/Center2"});
+
+
 		// Test cases
         testGetShortestPath(proj, "/wiki/Flow_network", "/wiki/Flow_network", 0);
         testGetShortestPath(proj, "/wiki/Non_existent_page", "/wiki/Flow_network", -1);
@@ -55,6 +64,19 @@ public class CITS2200ProjectTester {
             System.out.println("Test passed: " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + elapsedTime + " ns");
         } else {
             System.out.println("Test failed: " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + elapsedTime + " ns");
+        }
+    }
+
+	
+    private static void testGetCenters(CITS2200Project proj, String[] expected) {
+        long startTime = System.nanoTime();
+        String[] result = proj.getCenters();
+        long elapsedTime = System.nanoTime() - startTime;
+
+        if (Arrays.equals(result, expected)) {
+            System.out.println("Test passed: " + Arrays.toString(result) + " | Expected: " + Arrays.toString(expected) + " | Time: " + elapsedTime + " ns");
+        } else {
+            System.out.println("Test failed: " + Arrays.toString(result) + " | Expected: " + Arrays.toString(expected) + " | Time: " + elapsedTime + " ns");
         }
     }
 
