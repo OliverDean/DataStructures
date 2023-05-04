@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import CITS2200.*;
 
@@ -41,6 +42,14 @@ public class WikiPageGraph implements CITS2200Project {
         }
     }
 
+	/**
+	 * Finds the shorest path in number of links between two pages.
+	 * If there is no path, returns -1.
+	 * 
+	 * @param urlFrom the URL where the path should start.
+	 * @param urlTo the URL where the path should end.
+	 * @return the legnth of the shorest path in number of links followed.
+	 */
     @Override
     public int getShortestPath(String urlFrom, String urlTo) {
         if (!adjacencyList.containsKey(urlFrom) || !adjacencyList.containsKey(urlTo)) {
@@ -105,6 +114,15 @@ public class WikiPageGraph implements CITS2200Project {
         }
     }
 
+
+	/**
+	 * Finds all the centers of the page graph. The order of pages
+	 * in the output does not matter. Any order is correct as long as
+	 * all the centers are in the array, and no pages that aren't centers
+	 * are in the array.
+	 * 
+	 * @return an array containing all the URLs that correspond to pages that are centers.
+	 */
     @Override
     public String[] getCenters() {
 
@@ -140,12 +158,89 @@ public class WikiPageGraph implements CITS2200Project {
         return centers.toArray(new String[0]);
     }
 
-
+    
+	/**
+	 * Finds all the strongly connected components of the page graph.
+	 * Every strongly connected component can be represented as an array 
+	 * containing the page URLs in the component. The return value is thus an array
+	 * of strongly connected components. The order of elements in these arrays
+	 * does not matter. Any output that contains all the strongly connected
+	 * components is considered correct.
+	 * 
+	 * @return an array containing every strongly connected component.
+	 */
     @Override
     public String[][] getStronglyConnectedComponents() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStronglyConnectedComponents'");
+        
+        Map<String, List<String>> transposeGraph = getTransposeGraph();
+        Stack<String> postOrder = getDFSPostOrder();
+        List<List<String>> sccList = new ArrayList<>();
+    
+        Set<String> visited = new HashSet<>();
+        while (!postOrder.isEmpty()) {
+            String vertex = postOrder.pop();
+            if (!visited.contains(vertex)) {
+                List<String> scc = new ArrayList<>();
+                dfsTransposeGraph(vertex, visited, transposeGraph, scc);
+                sccList.add(scc);
+            }
+        }
+    
+        String[][] result = new String[sccList.size()][];
+        for (int i = 0; i < sccList.size(); i++) {
+            result[i] = sccList.get(i).toArray(new String[0]);
+        }
+        return result;
     }
+    
+    private Map<String, List<String>> getTransposeGraph() {
+        Map<String, List<String>> transposeGraph = new HashMap<>();
+        for (String vertex : adjacencyList.keySet()) {
+            for (String neighbor : adjacencyList.get(vertex)) {
+                if (!transposeGraph.containsKey(neighbor)) {
+                    transposeGraph.put(neighbor, new ArrayList<>());
+                }
+                transposeGraph.get(neighbor).add(vertex);
+            }
+        }
+        return transposeGraph;
+    }
+    
+    private Stack<String> getDFSPostOrder() {
+        Stack<String> postOrder = new Stack<>();
+        Set<String> visited = new HashSet<>();
+        for (String vertex : adjacencyList.keySet()) {
+            if (!visited.contains(vertex)) {
+                dfsPostOrder(vertex, visited, postOrder);
+            }
+        }
+        return postOrder;
+    }
+    
+    private void dfsPostOrder(String vertex, Set<String> visited, Stack<String> postOrder) {
+        visited.add(vertex);
+        if (adjacencyList.containsKey(vertex)) {
+            for (String neighbor : adjacencyList.get(vertex)) {
+                if (!visited.contains(neighbor)) {
+                    dfsPostOrder(neighbor, visited, postOrder);
+                }
+            }
+        }
+        postOrder.push(vertex);
+    }
+    
+    private void dfsTransposeGraph(String vertex, Set<String> visited, Map<String, List<String>> transposeGraph, List<String> scc) {
+        visited.add(vertex);
+        scc.add(vertex);
+        if (transposeGraph.containsKey(vertex)) {
+            for (String neighbor : transposeGraph.get(vertex)) {
+                if (!visited.contains(neighbor)) {
+                    dfsTransposeGraph(neighbor, visited, transposeGraph, scc);
+                }
+            }
+        }
+    }
+    
 
     @Override
     public String[] getHamiltonianPath() {
