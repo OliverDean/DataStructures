@@ -17,7 +17,7 @@ public class WikiPageGraph implements CITS2200Project {
     }
 
     /**
-     * Adds an edge to the Wikipedia page graph. If the pages do not
+     * Adds an edge to the Wiki page graph. If the pages do not
      * already exist in the graph, they will be added to the graph.
      * 
      * @param urlFrom the URL which has a link to urlTo.
@@ -35,9 +35,12 @@ public class WikiPageGraph implements CITS2200Project {
             adjacencyList.get(urlFrom).add(urlTo);
         }
     }
+
     /**
-     * Loads a graph from a string representation, where each pair of lines represents an edge between two vertices.
-     * The first line in the pair is the source vertex, and the second line is the destination vertex.
+     * Loads a graph from a string representation, where each pair of lines
+     * represents an edge between two vertices.
+     * The first line in the pair is the source vertex, and the second line is the
+     * destination vertex.
      *
      * @param inputData A string representation of the graph.
      */
@@ -51,23 +54,23 @@ public class WikiPageGraph implements CITS2200Project {
     }
 
     public static void loadGraph(CITS2200Project project, String path) {
-		// The graph is in the following format:
-		// Every pair of consecutive lines represent a directed edge.
-		// The edge goes from the URL in the first line to the URL in the second line.
-		try {
-			try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-				while (reader.ready()) {
-					String from = reader.readLine();
-					String to = reader.readLine();
-					System.out.println("Adding edge from " + from + " to " + to);
-					project.addEdge(from, to);
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("There was a problem:");
-			System.out.println(e.toString());
-		}
-	}
+        // The graph is in the following format:
+        // Every pair of consecutive lines represent a directed edge.
+        // The edge goes from the URL in the first line to the URL in the second line.
+        try {
+            try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+                while (reader.ready()) {
+                    String from = reader.readLine();
+                    String to = reader.readLine();
+                    System.out.println("Adding edge from " + from + " to " + to);
+                    project.addEdge(from, to);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("There was a problem:");
+            System.out.println(e.toString());
+        }
+    }
 
     /**
      * Finds the shortest path in number of links between two pages.
@@ -183,6 +186,7 @@ public class WikiPageGraph implements CITS2200Project {
 
         return centers.toArray(new String[0]);
     }
+
     /**
      * Finds all the strongly connected components of the page graph.
      * Every strongly connected component can be represented as an array
@@ -197,8 +201,10 @@ public class WikiPageGraph implements CITS2200Project {
     public String[][] getStronglyConnectedComponents() {
 
         // Step 1: Transpose the graph (reverse the direction of all edges)
-        // Step 2: Perform a depth-first search on the original graph and store vertices in post-order
-        // Step 3: Perform a depth-first search on the transposed graph, exploring vertices in the order of postOrder
+        // Step 2: Perform a depth-first search on the original graph and store vertices
+        // in post-order
+        // Step 3: Perform a depth-first search on the transposed graph, exploring
+        // vertices in the order of postOrder
 
         Map<String, List<String>> transposeGraph = getTransposeGraph();
         Stack<String> postOrder = getDFSPostOrder();
@@ -254,11 +260,13 @@ public class WikiPageGraph implements CITS2200Project {
         }
         return postOrder;
     }
+
     /**
-     * Recursive depth-first search that populates the postOrder stack with vertices in post-order.
+     * Recursive depth-first search that populates the postOrder stack with vertices
+     * in post-order.
      *
-     * @param vertex The current vertex being explored.
-     * @param visited The set of visited vertices.
+     * @param vertex    The current vertex being explored.
+     * @param visited   The set of visited vertices.
      * @param postOrder The stack containing vertices in post-order.
      */
     private void dfsPostOrder(String vertex, Set<String> visited, Stack<String> postOrder) {
@@ -272,13 +280,16 @@ public class WikiPageGraph implements CITS2200Project {
         }
         postOrder.push(vertex);
     }
+
     /**
-     * Recursive depth-first search that populates the scc list with vertices in the current strongly connected component.
+     * Recursive depth-first search that populates the scc list with vertices in the
+     * current strongly connected component.
      *
-     * @param vertex The current vertex being explored.
-     * @param visited The set of visited vertices.
+     * @param vertex         The current vertex being explored.
+     * @param visited        The set of visited vertices.
      * @param transposeGraph The adjacency list of the transposed graph.
-     * @param scc The list containing the vertices in the current strongly connected component.
+     * @param scc            The list containing the vertices in the current
+     *                       strongly connected component.
      */
     private void dfsTransposeGraph(String vertex, Set<String> visited, Map<String, List<String>> transposeGraph,
             List<String> scc) {
@@ -310,7 +321,8 @@ public class WikiPageGraph implements CITS2200Project {
         int n = getVertices().length;
 
         // Check if the graph has more than 20 vertices
-        // could get "Exception in thread "main" java.lang.OutOfMemoryError: Java heap space" if ignored.
+        // could get "Exception in thread "main" java.lang.OutOfMemoryError: Java heap
+        // space" if ignored.
         if (n > 20) {
             throw new UnsupportedOperationException(
                     "This method should not be called on a graph with more than 20 vertices.");
@@ -382,7 +394,8 @@ public class WikiPageGraph implements CITS2200Project {
      *
      * @param vertexU The first vertex of the edge.
      * @param vertexV The second vertex of the edge.
-     * @return true if there is an edge between vertexU and vertexV, false otherwise.
+     * @return true if there is an edge between vertexU and vertexV, false
+     *         otherwise.
      */
     private boolean isEdge(String vertexU, String vertexV) {
         List<String> edges = adjacencyList.get(vertexU);
