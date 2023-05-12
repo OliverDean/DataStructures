@@ -25,9 +25,9 @@ public class CITS2200ProjectTester {
 
 	public static void main(String[] args) {
 
-		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData1.txt";
+		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData.txt";
 
-		int testDataFlag = 1;
+		int testDataFlag = 0;
 
 		// Create an instance of your implementation.
 		CITS2200Project proj = new WikiPageGraph();
@@ -63,6 +63,16 @@ public class CITS2200ProjectTester {
 			testGetHamiltonianPath(proj, new String[0]);
 
 		}
+		if (testDataFlag == 4){
+			testGetCenters(proj, new String[]{"/wiki/Hockey", "/wiki/PingPong"});
+			// Test cases for getShortestPath
+			testGetShortestPath(proj, "/wiki/Hockey", "/wiki/Basketball", 1);
+
+			testGetStronglyConnectedComponents(proj, new String[][]{{"A_bunch"}});
+
+			testGetHamiltonianPath(proj, new String[0]);
+		}
+
 		if (testDataFlag == 2){
 			testGetCenters(proj, new String[]{"/wiki/Sociology_of_religion"});
 			// Test cases for getShortestPath
@@ -144,12 +154,12 @@ public class CITS2200ProjectTester {
         long startTime = System.nanoTime();
         int result = proj.getShortestPath(urlFrom, urlTo);
 		long endTime = System.nanoTime();
-		long duration = (endTime - startTime) / 1000000;
+		long duration = (endTime - startTime) ;
 
         if (result == expected) {
-            System.out.println("Test passed: Shortest path " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + duration + " ms");
+            System.out.println("Test passed: Shortest path " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + duration + " ns");
         } else {
-            System.out.println("Test failed: Expected shortest path " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + duration + " ms");
+            System.out.println("Test failed: Expected shortest path " + urlFrom + " -> " + urlTo + " | Expected: " + expected + " | Result: " + result + " | Time: " + duration + " ns");
         }
     }
 
@@ -159,6 +169,7 @@ public class CITS2200ProjectTester {
         String[] result = proj.getCenters();
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime) / 1000000;
+		long nanoDuration = (endTime - startTime);
 
 		List<String> expectedList = Arrays.asList(expected);
         boolean success = false;
@@ -170,9 +181,9 @@ public class CITS2200ProjectTester {
         }
 
         if (success) {
-            System.out.println("Test passed: Centers are " + Arrays.toString(result) + " | Expected: " + Arrays.toString(expected) + " | Time: " + duration + " ms");
+            System.out.println("Test passed: Centers are " + Arrays.toString(result) + " | Expected: " + Arrays.toString(expected) + " | Time: " + duration + " ms" +  " (" + nanoDuration + " ns)");
         } else {
-            System.out.println("Test failed: Expected centers are " + Arrays.toString(result) + " | Expected: " + Arrays.toString(expected) + " | Time: " + duration + " ms");
+            System.out.println("Test failed: Expected centers are " + Arrays.toString(result) + " | Expected: " + Arrays.toString(expected) + " | Time: " + duration + " ns");
         }
     }
 
@@ -180,7 +191,7 @@ public class CITS2200ProjectTester {
 		long startTime = System.nanoTime();
 		String[][] actual = proj.getStronglyConnectedComponents();
 		long endTime = System.nanoTime();
-		long duration = (endTime - startTime) / 1000000;
+		long duration = (endTime - startTime);
 	
 		// Sort the arrays for comparison
 		for (String[] arr : actual) {
@@ -193,7 +204,7 @@ public class CITS2200ProjectTester {
 		Arrays.sort(expected, (a, b) -> a[0].compareTo(b[0]));
 	
 		if (Arrays.deepEquals(actual, expected)) {
-			System.out.println("Test passed: Strongly connected component found: " + Arrays.deepToString(actual) + " in " + duration + " ms");
+			System.out.println("Test passed: Strongly connected component found: " + Arrays.deepToString(actual) + " in " + duration + " ns");
 		} else {
 			System.out.println("Test failed: Expected strongly connected component " + Arrays.deepToString(expected) + " but got " + Arrays.deepToString(actual));
 		}
@@ -204,9 +215,10 @@ public class CITS2200ProjectTester {
 		String[] actualHamiltonianPath = proj.getHamiltonianPath();
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime) / 1000000;
+		long nanoDuration = (endTime - startTime);
 
 		if (Arrays.equals(actualHamiltonianPath, expectedHamiltonianPath)) {
-			System.out.println("Test passed: Hamiltonian path found: " + Arrays.toString(actualHamiltonianPath) + " in " + duration + " ms");
+			System.out.println("Test passed: Hamiltonian path found: " + Arrays.toString(actualHamiltonianPath) + " in " + duration + " ms" + " (" + nanoDuration + " ns)");
 		} else {
 			System.out.println("Test failed: Expected Hamiltonian path " + Arrays.toString(expectedHamiltonianPath) +
 					", but got " + Arrays.toString(actualHamiltonianPath) + " in " + duration + " ms");
