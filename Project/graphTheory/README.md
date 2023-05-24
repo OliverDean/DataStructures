@@ -1,26 +1,7 @@
-## Getting Started
-
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
 
 
 
 
-Project docs to follow
 
 the project outilne
 https://teaching.csse.uwa.edu.au/units/CITS2200/Labs/project-2023/project-2023.html
@@ -32,7 +13,6 @@ Question 2. Write a method that finds a Hamiltonian path in a Wikipedia page gra
 Question 3. Write a method that finds every ‘strongly connected component’ of pages. A strongly connected component is a set of vertices such that there is a path between every ordered pair of vertices in the strongly connected component. See here for more information about strongly connected components.
 
 Questions 4. Write a method that finds all the centers of the Wikipedia page graph. A vertex is considered to be the center of a graph if the maximum shortest path from that vertex to any other vertex is the minimum possible. See here for more information about ‘graph center’.
-
 
 
 pdf on the common mistakes and how to perform better

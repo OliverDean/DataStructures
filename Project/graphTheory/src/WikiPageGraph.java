@@ -36,23 +36,6 @@ public class WikiPageGraph implements CITS2200Project {
         }
     }
 
-    /**
-     * Loads a graph from a string representation, where each pair of lines
-     * represents an edge between two vertices.
-     * The first line in the pair is the source vertex, and the second line is the
-     * destination vertex.
-     *
-     * @param inputData A string representation of the graph.
-     */
-    public void loadGraphFromString(String inputData) {
-        String[] lines = inputData.split("\n");
-        for (int i = 0; i < lines.length - 1; i += 2) {
-            String from = lines[i];
-            String to = lines[i + 1];
-            addEdge(from, to);
-        }
-    }
-
     public static void loadGraph(CITS2200Project project, String path) {
         // The graph is in the following format:
         // Every pair of consecutive lines represent a directed edge.

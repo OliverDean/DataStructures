@@ -25,9 +25,9 @@ public class CITS2200ProjectTester {
 
 	public static void main(String[] args) {
 
-		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData.txt";
+		String pathToGraphFile = "C://Users/olive/OneDrive/Desktop/CompSci/2023 semester 1/cits2200 algorithms/project/DataStructures/Project/graphTheory/lib/wikiTestData3.txt";
 
-		int testDataFlag = 0;
+		int testDataFlag = 4;
 
 		// Create an instance of your implementation.
 		CITS2200Project proj = new WikiPageGraph();
